@@ -51,6 +51,7 @@ void decodeInteger(queue<string>& tokens) {
         cout << "Error: incorrect integer encoding.\n";
         return;
     }
+    tokens.pop();  // remove 'e'
 }
 void decodeList(queue<string>& tokens) {
     assert(tokens.front() == "l");
@@ -60,6 +61,10 @@ void decodeDict(queue<string>& tokens) {
 }
 void decodeString(queue<string>& tokens) {
     assert(tokens.front() == "s");
+    tokens.pop();
+    string value = tokens.front();
+    tokens.pop();  // remove string value
+    cout << value << '\n';
 }
 
 void decode(queue<string>& tokens) {
@@ -103,10 +108,12 @@ int main(int argc, const char* argv []) {
     tokenize(line, tokens);
     while (!tokens.empty()) {
         cout << "[" << tokens.front() << "]";
-        if (tokens.front() != "i") {
+        if (tokens.front() == "i" || tokens.front() == "s") {
+            decode(tokens);
+        }
+        else {
             tokens.pop();
         }
-        decode(tokens);
     }
     return 0;
 }
