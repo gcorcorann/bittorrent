@@ -1,9 +1,7 @@
+#include <iostream>
 #include <fstream>
-#include <regex>
-#include <cassert>
 #include <queue>
 #include <string>
-#include <sstream>
 
 #include "decoder.h"
 #include "tokenize.h"
@@ -27,6 +25,11 @@ int main(int argc, const char* argv []) {
     std::queue<std::string> tokens;
     Tokenize::tokenize(line, tokens);
     Value decoded = Decoder::decode(tokens);
-    Decoder::print(decoded);
+    Value value = std::get<ValueMap>(decoded.data)["info"];
+    Decoder::print(value);
+
+    // TODO: add encoder
+    Encoder::encode(value);
+    std::cout << std::endl;
     return 0;
 }

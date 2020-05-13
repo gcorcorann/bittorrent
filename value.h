@@ -5,6 +5,8 @@
 #include <variant>
 
 struct Value {
-    std::variant<int, std::string, std::vector<Value>, std::map<std::string, Value>> m_data;
+    std::variant<int, std::string, std::vector<Value>, std::map<std::string, Value>> data;
 };
 
+using ValueVector = std::vector<Value>;
+using ValueMap = std::map<std::string, Value>;

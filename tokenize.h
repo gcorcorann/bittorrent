@@ -5,6 +5,7 @@
 #include <queue>
 #include <regex>
 #include <cassert>
+#include <iostream>
 
 class Tokenize {
 public:
