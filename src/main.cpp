@@ -33,9 +33,14 @@ int main(int argc, const char* argv []) {
     std::cout << "Encoded:\n";
     std::cout << encoded << '\n' << '\n';
 
-    unsigned char* hash = Hash::Sha1(encoded);
-    std::cout << "SHA1 hash:\n";
+    unsigned char* hash = Hash::SHA1_Encode(encoded);
+    std::cout << "SHA1 Hash:\n";
     Hash::print(hash);
+    std::cout << '\n';
+    std::cout << "URL Encoded Hash:\n";
+    std::string url_encoded = Hash::URL_Encode(hash);
+    std::cout<< url_encoded << '\n';
+
     std::cout << std::endl;
     return 0;
 }
