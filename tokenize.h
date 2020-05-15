@@ -6,6 +6,10 @@
 #include <regex>
 #include <cassert>
 #include <iostream>
+#include <vector>
+#include <iostream>
+#include <regex>
+
 
 class Tokenize {
 public:
@@ -16,7 +20,8 @@ public:
             assert(sm.size() == 4);
             if (sm[2].str().empty()) {  // not string
                 out_tokens.push(sm[0]);
-                tokenize(encoded.substr(sm[0].str().size(), encoded.size() - sm[0].str().size()), out_tokens);
+                tokenize(encoded.substr(sm[0].str().size(),
+                    encoded.size() - sm[0].str().size()), out_tokens);
             }
             else {
                 std::istringstream iss;

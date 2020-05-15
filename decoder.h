@@ -1,9 +1,11 @@
 #pragma once
+
 #include <iostream>
 #include <cassert>
 #include <queue>
 #include <string>
 #include <sstream>
+
 #include "value.h"
 
 class Decoder {
@@ -29,23 +31,26 @@ public:
     static void print(Value decoded) {
         if (auto v = std::get_if<std::string>(&decoded.data)) {
             std::cout << *v;
+            return;
         }
         if (auto v = std::get_if<int>(&decoded.data)) {
             std::cout << *v;
+            return;
         }
         if (auto v = std::get_if<std::vector<Value>>(&decoded.data)) {
             printList(*v);
+            return;
         }
         if (auto v = std::get_if<std::map<std::string, Value>>(&decoded.data)) {
             printDict(*v);
+            return;
         }
     }
     static void printDict(std::map<std::string, Value>& dict) {
         std::cout << "{";
         int i = 1;
         for (auto it = dict.begin(); it != dict.end(); ++it, ++i) {
-            print({it->first});
-            std::cout << ": ";
+            std::cout << it->first << ": ";
             print(it->second);
             if (i != dict.size()) {  // don't print comma if end of dict
                 std::cout << ", ";
