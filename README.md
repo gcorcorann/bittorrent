@@ -1,5 +1,6 @@
 # bittorrent
 Playing with bittorrent protocol
 
-TODO:
-* read newlines in .torrent file
+Features:
+* Bencoding encode/decode
+* SHA1 hashing
