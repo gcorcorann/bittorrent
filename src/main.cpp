@@ -9,7 +9,20 @@
 #include "tokenize.h"
 #include "value.h"
 #include "hash.h"
+#include "requests.h"
 
+struct Torrent {
+    std::string url_encoded;
+    std::string announce;
+};
+
+void GET_Request(Torrent torrent) {
+
+    std::string request = "GET /announce?info_hash=" + torrent.url_encoded;
+    request += " HTTP/1.1\r\n";
+    request += "Host: " + torrent.announce.substr(0, torrent.announce.size() - 9) + "\r\n";
+    std::cout << request << std::endl;
+}
 
 int main(int argc, const char* argv []) {
     if (argc < 2) {
@@ -39,8 +52,13 @@ int main(int argc, const char* argv []) {
     std::cout << '\n';
     std::cout << "URL Encoded Hash:\n";
     std::string url_encoded = Hash::URL_Encode(hash);
-    std::cout<< url_encoded << '\n';
+    std::cout<< url_encoded << '\n' << '\n';
 
+    // send url request
+    Value announce_value = std::get<ValueMap>(decoded.data)["announce"];
+    std::string announce = std::get<std::string>(announce_value.data);
+    Requests request(announce);  // set request with host url
+    request.get(url_encoded);
     std::cout << std::endl;
     return 0;
 }
