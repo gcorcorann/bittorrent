@@ -9,7 +9,7 @@
 #include "tokenize.h"
 #include "value.h"
 #include "hash.h"
-#include "requests.h"
+#include "request.h"
 
 struct Torrent {
     std::string url_encoded;
@@ -37,10 +37,10 @@ int main(int argc, const char* argv []) {
     Tokenize::tokenize(buffer, tokens);
 
     Value decoded = Decoder::decode(tokens);
-    Value value = std::get<ValueMap>(decoded.data)["info"];
     std::cout << "Decoded:\n";
-    Decoder::print(value);
+    Decoder::print(decoded);
     std::cout << '\n' << '\n';
+    Value value = std::get<ValueMap>(decoded.data)["info"];
 
     std::string encoded = Encoder::encode(value);
     std::cout << "Encoded:\n";
@@ -57,7 +57,7 @@ int main(int argc, const char* argv []) {
     // send url request
     Value announce_value = std::get<ValueMap>(decoded.data)["announce"];
     std::string announce = std::get<std::string>(announce_value.data);
-    Requests request(announce);  // set request with host url
+    Request request(announce);  // set request with host url
     request.get(url_encoded);
     std::cout << std::endl;
     return 0;

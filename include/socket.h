@@ -23,6 +23,7 @@ private:
      *      char **h_addr_list;  // list of addresses from name sever
      */
     hostent* resolveHostname() {
+        std::cout << m_hostname.c_str() << std::endl;
         hostent* host = gethostbyname(m_hostname.c_str());
         if (host == nullptr || host->h_addr == nullptr) {
             throw std::invalid_argument("Hostname is not valid.");
@@ -45,6 +46,7 @@ private:
         // copy n bytes from src to dst (memcpy(dst, src, n))
         memcpy(&serv_addr.sin_addr, host.h_addr, host.h_length);
         if (connect(socket, (sockaddr*)&serv_addr, sizeof(serv_addr)) < 0) {
+            std::cout << strerror(errno) << std::endl;
             throw std::invalid_argument("Connection failed.");
         }
     }
